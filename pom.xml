@@ -6,7 +6,7 @@
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
-	<name>kit</name>
+	<name>webkit</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
