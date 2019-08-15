@@ -23,13 +23,13 @@ import com.lnwazg.kit.mime.MimeMappingMap;
  */
 public class BasicController
 {
-    protected ThreadLocal<HttpServletRequest> request;
+    protected ThreadLocal<HttpServletRequest> request = new ThreadLocal<>();
     
-    protected ThreadLocal<HttpServletResponse> response;
+    protected ThreadLocal<HttpServletResponse> response = new ThreadLocal<>();
     
-    protected ThreadLocal<HttpServletRequest> req;
+    protected ThreadLocal<HttpServletRequest> req = new ThreadLocal<>();
     
-    protected ThreadLocal<HttpServletResponse> resp;
+    protected ThreadLocal<HttpServletResponse> resp = new ThreadLocal<>();
     
     public String getParam(String key)
     {
