@@ -77,10 +77,21 @@ public class MyMvcServlet extends HttpServlet
             @Override
             public void fillParamsCustom(Object object, Map<String, Object> paramMap)
             {
-                ClassKit.setField(object, "request", paramMap.get("request"));
-                ClassKit.setField(object, "response", paramMap.get("response"));
-                ClassKit.setField(object, "req", paramMap.get("req"));
-                ClassKit.setField(object, "resp", paramMap.get("resp"));
+                //每次都用单例，但是走的是线程本地对象
+                ThreadLocal<HttpServletRequest> request = ClassKit.getFieldValue(object, "request");
+                ThreadLocal<HttpServletResponse> response = ClassKit.getFieldValue(object, "response");
+                ThreadLocal<HttpServletRequest> req = ClassKit.getFieldValue(object, "req");
+                ThreadLocal<HttpServletResponse> resp = ClassKit.getFieldValue(object, "resp");
+                
+                request.set((HttpServletRequest)paramMap.get("request"));
+                response.set((HttpServletResponse)paramMap.get("response"));
+                req.set((HttpServletRequest)paramMap.get("req"));
+                resp.set((HttpServletResponse)paramMap.get("resp"));
+                
+                //                ClassKit.setField(object, "request", paramMap.get("request"));
+                //                ClassKit.setField(object, "response", paramMap.get("response"));
+                //                ClassKit.setField(object, "req", paramMap.get("req"));
+                //                ClassKit.setField(object, "resp", paramMap.get("resp"));
             }
         };
     }

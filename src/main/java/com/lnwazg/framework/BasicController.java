@@ -23,17 +23,17 @@ import com.lnwazg.kit.mime.MimeMappingMap;
  */
 public class BasicController
 {
-    protected HttpServletRequest request;
+    protected ThreadLocal<HttpServletRequest> request;
     
-    protected HttpServletResponse response;
+    protected ThreadLocal<HttpServletResponse> response;
     
-    protected HttpServletRequest req;
+    protected ThreadLocal<HttpServletRequest> req;
     
-    protected HttpServletResponse resp;
+    protected ThreadLocal<HttpServletResponse> resp;
     
     public String getParam(String key)
     {
-        return req.getParameter(key);
+        return req.get().getParameter(key);
     }
     
     /**
@@ -43,11 +43,11 @@ public class BasicController
      */
     public void okJson(String json)
     {
-        resp.setHeader("Content-Type", "application/json;charset=utf-8");
+        resp.get().setHeader("Content-Type", "application/json;charset=utf-8");
         try
         {
-            response.getWriter().write(json);
-            response.getWriter().flush();
+            response.get().getWriter().write(json);
+            response.get().getWriter().flush();
         }
         catch (IOException e)
         {
@@ -67,11 +67,11 @@ public class BasicController
         {
             contentType = String.format("%s;charset=utf-8", MimeMappingMap.mimeMap.get(extension.toLowerCase()));
         }
-        resp.setHeader("Content-Type", contentType);
+        resp.get().setHeader("Content-Type", contentType);
         OutputStream oStream = null;
         try
         {
-            oStream = response.getOutputStream();
+            oStream = response.get().getOutputStream();
             IOUtils.write(bytes, oStream);
         }
         catch (IOException e)
@@ -96,7 +96,7 @@ public class BasicController
     
     public void addHeaderPre(String key, String value)
     {
-        resp.addHeader(key, value);
+        resp.get().addHeader(key, value);
     }
     
     @Override
