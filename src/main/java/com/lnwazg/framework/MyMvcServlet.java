@@ -100,6 +100,7 @@ public class MyMvcServlet extends HttpServlet
     protected void service(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException
     {
+        System.out.println("Current Thead Id=" + Thread.currentThread().getId());
         //        //    /webtest
         //        System.out.println("path: " + req.getContextPath());
         //        //    /index/abc.do
